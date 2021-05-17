@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Мебельный магазин Ros' Exc</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link href="images/ros.PNG" rel="icon" type="image/png">
+  <link rel="stylesheet" type="text/css" href="styles/styles.css">
+  <script src="scripts/scripts.js"></script>
+  <script src="https://kit.fontawesome.com/beb6f9a828.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+<header>
+  <div class="header">
+    <a class="logo" href="index">
+      <img src="images/black.PNG" width="127" height="126">
+    </a>
+    <div class="navigation">
+      <a href="index">ГЛАВНАЯ</a>
+      <a href="stelagi">СТЕЛЛАЖИ</a>
+      <a href="wardrobes">ГАРДЕРОБЫ</a>
+      <a href="commodes">КОМОДЫ</a>
+      <a href="contacts">КОНТАКТЫ</a>
+    </div>
+  </div>
+</header>
+
+<div class="container2">
+  <div style="text-align:center">
+    <h2>Регистрация</h2>
+    <p>Введите данные для регистрации</p>
+  </div>
+  <div class="row">
+    <div class="column2">
+      <form th:action="@{registration}"
+            th:object="${newUser}" method="POST">
+        <div th:if="${error}">
+          <div class="alert alert-danger" style="color: darkred">
+            Пользователь с такой почтой уже существует
+          </div>
+        </div>
+        <br>
+        <label for="fname">Имя</label>
+        <input type="text" id="fname" name="firstname" placeholder="Введите имя" th:field="*{name}">
+
+        <label for="lname">Фамилия</label>
+        <input type="text" id="lname" name="lastname" placeholder="Введите фамилию" th:field="*{surname}">
+
+        <label for="login">Почта</label>
+        <input type="text" id="login" name="login" placeholder="Введите почту" th:field="*{login}">
+
+        <label for="pswd">Пароль</label>
+        <input type="password" id="pswd" name="pswd" placeholder="Введите пароль" th:field="*{password}">
+
+        <input type="submit" value="Зарегистрироваться">
+      </form>
+    </div>
+  </div>
+  <div class="social">
+    <a href="https://www.instagram.com/ros.exclusive/"><i class="fab fa-instagram-square"></i></a>
+    <a href="https://www.facebook.com/Мебель-Skandi-Москва-133314148159763/"><i class="fab fa-facebook-square"></i></a>
+    <a href="mailto:name@email.com"><i class="fas fa-envelope"></i></a>
+  </div>
+</div>
+
+<footer>
+  <div class="name">
+    ROS' EXC
+  </div>
+  <div class="info">
+    <a href="tel:89175972620" class="tele">8 (917) 597-26-20</a>
+    <span class="freecall">звонок бесплатный</span>
+  </div>
+  <div class="me">Старовойтов Фёдор (c) <br>ИКБО-10-19</div>
+</footer>
+</body>

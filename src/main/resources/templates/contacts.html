@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Мебельный магазин Ros' Exc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link href="images/ros.PNG" rel="icon" type="image/png">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <script src="scripts/scripts.js"></script>
+    <script src="https://kit.fontawesome.com/beb6f9a828.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+	<header>
+		<div class="header">
+			<a class="logo" href="index">
+				<img src="images/black.PNG" width="127" height="126">
+			</a>
+			<div class="navigation">
+            <a href="index">ГЛАВНАЯ</a>
+            <a href="stelagi">СТЕЛЛАЖИ</a>
+            <a href="wardrobes">ГАРДЕРОБЫ</a>
+            <a href="commodes">КОМОДЫ</a>
+            <a href="contacts">КОНТАКТЫ</a>
+        </div>
+    </div>
+    </header>
+    
+    <div class="container2">
+        <div style="text-align:center">
+          <h2>Сделайте заказ</h2>
+          <p>Заполните форму обратной связи и мы обязательно Вам перезвоним для уточнения заказа</p>
+        </div>
+        <div class="row">
+          <div class="column2">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2388.5633014573805!2d44.95076531562386!3d53.22567797995382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4141017f293938a5%3A0xbb0515234a989852!2z0L_RgC4g0J_QvtCx0LXQtNGLLCA3NdGALCDQn9C10L3Qt9CwLCDQn9C10L3Qt9C10L3RgdC60LDRjyDQvtCx0LsuLCA0NDAwMjg!5e0!3m2!1sru!2sru!4v1606643828422!5m2!1sru!2sru" width="100%%" height="450px" frameborder="0" style="border: 1px solid #ccc; border-radius: 20px;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+          </div>
+          <div class="column2">
+              <form th:action="@{addOrder}"
+                    th:object="${newOrder}" method="POST">
+
+              <label for="country">Город</label>
+              <select id="country" name="country" th:field="*{city}">
+                <option th:value="Москва">Москва</option>
+                <option th:value="Санкт-Петербург">Санкт-Петербург</option>
+                <option th:value="Пенза">Пенза</option>
+              </select>
+
+              <label for="subject">Что Вам понравилось?</label>
+              <textarea id="subject" th:field="*{description}" name="subject" placeholder="Напишите название товара, который Вам понравился" style="height:116px; font-family: Roboto;"></textarea>
+
+              <input type="submit" value="Submit">
+            </form>
+          </div>
+        </div>
+        <form th:action="@{logout}" method="GET">
+            <input type="submit" value="Выйти">
+        </form>
+
+    <div>
+        <table border="1">
+            <caption>Ваши заказы</caption>
+            <tr>
+                <th>Описание заказа</th>
+                <th>Город</th>
+            </tr>
+            <tr th:each ="order : ${orders}">
+                <td th:utext="${order.description}">...</td>
+                <td th:utext="${order.city}">...</td>
+            </tr>
+        </table>
+        <br>
+    </div>
+        <div class="social">
+            <a href="https://www.instagram.com/ros.exclusive/"><i class="fab fa-instagram-square"></i></a>
+            <a href="https://www.facebook.com/Мебель-Skandi-Москва-133314148159763/"><i class="fab fa-facebook-square"></i></a>
+            <a href="mailto:name@email.com"><i class="fas fa-envelope"></i></a>
+        </div>
+    </div>
+    <footer>
+        <div class="name">
+            ROS' EXC
+        </div>
+        <div class="info">
+            <a href="tel:89175972620" class="tele">8 (917) 597-26-20</a>
+            <span class="freecall">звонок бесплатный</span>
+        </div>
+        <div class="me">Старовойтов Фёдор (c) <br>ИКБО-10-19</div>
+    </footer>
+</body>

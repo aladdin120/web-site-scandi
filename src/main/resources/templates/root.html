@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Мебельный магазин Ros' Exc</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link href="images/ros.PNG" rel="icon" type="image/png">
+  <link rel="stylesheet" type="text/css" href="styles/styles.css">
+  <script src="scripts/scripts.js"></script>
+  <script src="https://kit.fontawesome.com/beb6f9a828.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+<header>
+  <div class="header">
+    <a class="logo" href="index">
+      <img src="images/black.PNG" width="127" height="126">
+    </a>
+  </div>
+</header>
+  <div>
+    <table border="1">
+      <caption>Все пользователи</caption>
+      <tr>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Почта</th>
+        <th>Роль</th>
+        <th></th>
+      </tr>
+      <tr th:each ="user : ${users}">
+        <td th:utext="${user.name}">...</td>
+        <td th:utext="${user.surname}">...</td>
+        <td th:utext="${user.login}">...</td>
+        <td th:utext="${user.roles}">...</td>
+        <td>
+          <a th:href="@{/user/{id}(id = ${user.id})}">Изменить</a>
+        </td>
+      </tr>
+    </table>
+    <br>
+  </div>
+<footer>
+  <div class="name">
+    ROS' EXC
+  </div>
+</footer>
+</body>

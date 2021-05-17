@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Мебельный магазин Ros' Exc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link href="images/ros.PNG" rel="icon" type="image/png">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/styles.css}">
+</head>
+
+<body>
+<header>
+    <div class="header">
+        <a class="logo" href="index">
+            <img th:src="@{/images/black.PNG}" width="127" height="126">
+        </a>
+    </div>
+</header>
+<div>
+    <div class="container2">
+        <div style="text-align:center">
+            <h2>Изменение данных пользователя</h2>
+        </div>
+        <div class="row">
+                <form th:action="@{/user}"
+                      th:object="${user}" method="POST">
+
+                    <label for="fname">Имя</label>
+                    <input type="text" id="fname" name="firstname" th:placeholder="*{name}" th:field="*{name}">
+
+                    <label for="lname">Фамилия</label>
+                    <input type="text" id="lname" name="lastname" th:placeholder="*{surname}" th:field="*{surname}">
+
+                    <label for="login">Почта</label>
+                    <input type="text" id="login" name="login" th:placeholder="*{login}" th:field="*{login}">
+
+                    <div th:each="role : ${roles}">
+                        <input  type="checkbox" th:name="${role}" th:value="${role}" th:checked="${#lists.contains(user.roles, role)}" />
+                        <label th:text="${role}"></label>
+                    </div>
+                    <input type="hidden" th:value="*{id}" name="userId">
+                    <br>
+                    <input type="submit" value="Сохранить">
+                </form>
+        </div>
+        <br>
+        <form th:action="@{/user}" method="GET">
+            <input type="submit" value="Вернуться назад">
+        </form>
+</div>
+</div>
+<footer>
+    <div class="name">
+        ROS' EXC
+    </div>
+</footer>
+</body>
