@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.Properties;
 
 @Configuration
-@EnableJpaRepositories("com.example.coursework.repos")
+@EnableJpaRepositories("com.example.coursework.models.repositories")
 public class AppConfig implements WebMvcConfigurer {
 
     @Bean

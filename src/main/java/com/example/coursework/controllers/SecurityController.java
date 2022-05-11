@@ -1,9 +1,10 @@
-package com.example.coursework.controller;
+package com.example.coursework.controllers;
 
-import com.example.coursework.email.EmailService;
-import com.example.coursework.entities.Role;
-import com.example.coursework.entities.User;
-import com.example.coursework.repos.UserRepository;
+import com.example.coursework.services.EmailService;
+import com.example.coursework.models.Role;
+import com.example.coursework.models.User;
+import com.example.coursework.models.repositories.UserRepository;
+import com.example.coursework.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -19,13 +20,7 @@ import java.util.Collections;
 @RequestMapping
 public class SecurityController {
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
-    EmailService emailService;
+    UserService userService;
 
     private boolean error = false;
 
@@ -40,16 +35,12 @@ public class SecurityController {
 
     @PostMapping("/registration")
     public String reg(@ModelAttribute("newUser") User newUser) {
-        User userFrom = userRepository.findUserByLogin(newUser.getLogin());
+        boolean flag = userService.registerUser(newUser);
 
-        if (userFrom != null) {
+        if (!flag) {
             error = true;
             return "redirect:registration";
         }
-        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-        newUser.setRoles(Collections.singleton(Role.USER));
-        userRepository.save(newUser);
-        emailService.sendNewMessage(newUser);
 
         return "redirect:login";
     }

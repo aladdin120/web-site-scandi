@@ -1,4 +1,4 @@
-package com.example.coursework.cookie;
+package com.example.coursework.config.cookie;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,7 +20,8 @@ public class CustomFilter extends UsernamePasswordAuthenticationFilter {
         setAuthenticationManager(authenticationManager);
         setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler() {
             @Override
-            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+                                                Authentication authentication) throws IOException, ServletException {
                 Cookie pCookie = new Cookie("password", request.getParameter("password"));
                 Cookie lCookie = new Cookie("login", request.getParameter("username"));
                 pCookie.setMaxAge(60 * 60 * 24 * 365);
@@ -33,7 +34,8 @@ public class CustomFilter extends UsernamePasswordAuthenticationFilter {
         });
         setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler() {
             @Override
-            public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+            public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+                                                AuthenticationException exception) throws IOException, ServletException {
                 super.setDefaultFailureUrl("/login?error");
                 super.onAuthenticationFailure(request, response, exception);
             }
@@ -42,7 +44,8 @@ public class CustomFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest request,
+                                                HttpServletResponse response) throws AuthenticationException {
         return super.attemptAuthentication(request, response);
     }
 }

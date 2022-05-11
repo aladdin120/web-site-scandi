@@ -1,8 +1,8 @@
-package com.example.coursework.email;
+package com.example.coursework.services;
 
-import com.example.coursework.entities.Order;
-import com.example.coursework.entities.User;
-import com.example.coursework.repos.UserRepository;
+import com.example.coursework.models.Order;
+import com.example.coursework.models.User;
+import com.example.coursework.models.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -24,8 +24,10 @@ public class EmailService {
         message.setFrom("testjavasendler@gmail.com");
         message.setTo(userRepository.findUserById(order.getUserid()).getLogin());
         message.setSubject("Заказ принят");
-        String text = "Здравствуйте, "+ userRepository.findUserById(order.getUserid()).getName() +" "+userRepository.findUserById(order.getUserid()).getSurname()
-                +".\nВаш заказ: "+order.getDescription()+"\nГород: "+order.getCity()+"\nПринят в работу!";
+        String text = "Здравствуйте, "+ userRepository.findUserById(order.getUserid()).getName()
+                +" "+userRepository.findUserById(order.getUserid()).getSurname()
+                +".\nВаш заказ: "+order.getDescription()+"\nГород: "
+                +order.getCity()+"\nПринят в работу!";
         message.setText(text);
 
         javaMailSender.send(message);

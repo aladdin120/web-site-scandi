@@ -1,19 +1,19 @@
-package com.example.coursework.controller;
+package com.example.coursework.controllers;
 
-import com.example.coursework.email.EmailService;
-import com.example.coursework.entities.Role;
-import com.example.coursework.entities.User;
-import com.example.coursework.repos.UserRepository;
+import com.example.coursework.models.Role;
+import com.example.coursework.models.User;
+import com.example.coursework.models.repositories.UserRepository;
+import com.example.coursework.services.EmailService;
+import com.example.coursework.services.OrderService;
+import com.example.coursework.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping
@@ -21,14 +21,17 @@ import java.util.stream.Collectors;
 public class AdminController {
 
     @Autowired
-    UserRepository userRepository;
+    EmailService emailService;
 
     @Autowired
-    EmailService emailService;
+    OrderService orderService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/user")
     public String getUsers(Model model) {
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userService.getAllUsers());
 
         return "root";
     }
@@ -44,24 +47,7 @@ public class AdminController {
     @PostMapping("/user")
     public String userSave(@RequestParam String name, @RequestParam String surname, @RequestParam String login,
                            @RequestParam Map<String, String> form, @RequestParam Long userId) {
-        User user = userRepository.findUserById(userId);
-        user.setName(name);
-        user.setSurname(surname);
-        user.setLogin(login);
-
-        Set<String> roles = Arrays.stream(Role.values())
-                .map(Role::name)
-                .collect(Collectors.toSet());
-        user.getRoles().clear();
-
-        for (String key : form.keySet()) {
-            if (roles.contains(key)) {
-                user.getRoles().add(Role.valueOf(key));
-            }
-        }
-        userRepository.save(user);
-        emailService.sendUpdateMessage(user);
-
+        userService.updateUserInfo(name, surname, login, form, userId);
         return "redirect:/user";
     }
 }

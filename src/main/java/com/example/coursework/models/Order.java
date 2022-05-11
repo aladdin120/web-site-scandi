@@ -1,4 +1,4 @@
-package com.example.coursework.entities;
+package com.example.coursework.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

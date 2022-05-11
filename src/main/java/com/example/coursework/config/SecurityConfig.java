@@ -1,6 +1,6 @@
 package com.example.coursework.config;
 
-import com.example.coursework.cookie.CustomFilter;
+import com.example.coursework.config.cookie.CustomFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -33,10 +32,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                     .disable()
                 .authorizeRequests()
-                    .antMatchers( "/registration", "/login", "/index", "/commodes", "/stelagi", "/wardrobes", "/", "/scripts/**", "/styles/**", "/images/**").permitAll()
+                    .antMatchers( "/registration", "/login", "/index", "/commodes",
+                            "/stelagi", "/wardrobes", "/",
+                            "/scripts/**", "/styles/**", "/images/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
-                    .addFilterBefore(new CustomFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                    .addFilterBefore(new CustomFilter("/login", authenticationManager()),
+                            UsernamePasswordAuthenticationFilter.class)
                     .formLogin()
                     .failureUrl("/login?error=true")
                     .defaultSuccessUrl("/contacts")
@@ -56,7 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usersByUsernameQuery(
                         "select login, password, '1' from users where login=?")
                 .authoritiesByUsernameQuery(
-                        "select u.login, ur.roles from users u inner join user_role ur on u.id = ur.user_id where u.login=?");
+                        "select u.login, ur.roles from users u inner join user_role " +
+                                "ur on u.id = ur.user_id where u.login=?");
     }
 
     @Bean
@@ -64,3 +67,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(10);
     }
 }
+
